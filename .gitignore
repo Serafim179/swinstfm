@@ -1,0 +1,6 @@
+
+/.idea
+/__pycache__
+/datasets/__pycache__
+/models/__pycache__
+*.png

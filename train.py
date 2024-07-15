@@ -164,7 +164,9 @@ def train(opt, train_dates, test_dates, IMAGE_SIZE, PATCH_SIZE):
 
     cri_pix = GeneratorLoss()
 
-    model.cuda()
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model.to(device)
+    #model.cuda()
     cri_pix.cuda()
 
     optimizer = optim.Adam(model.parameters(), lr=1e-4, weight_decay=0)

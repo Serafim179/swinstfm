@@ -18,7 +18,7 @@ def main():
     parser = argparse.ArgumentParser(description='Train Super Resolution Models')
     parser.add_argument('--image_size', default=[2720, 3200], type=int, help='the image size (height, width)')
     parser.add_argument('--patch_size', default=256, type=int, help='training images crop size')
-    parser.add_argument('--root_dir', default='/mnt/datadisk0/cgy/Datasets/LGC', help='Datasets root directory')
+    parser.add_argument('--root_dir', default='C:\\RS datasets\\Emelyanova datasets\\LGC dataset\\data\\LGC\\Landsat', help='Datasets root directory') #/mnt/datadisk0/cgy/Datasets/LGC
 
     opt = parser.parse_args()
     IMAGE_SIZE = opt.image_size

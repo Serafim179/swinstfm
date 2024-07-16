@@ -10,7 +10,7 @@ Code of [SwinSTFM: Remote Sensing Spatiotemporal Fusion using Swin Transformer](
 # Generating Training Set
 `python datasets/generate_data.py`
 
-# Traing
+# Training
 `python train.py`
 
 # Testing

@@ -18,7 +18,7 @@ def main():
     parser = argparse.ArgumentParser(description='Train Super Resolution Models')
     parser.add_argument('--image_size', default=[2720, 3200], type=int, help='the image size (height, width)')
     parser.add_argument('--patch_size', default=256, type=int, help='training images crop size')
-    parser.add_argument('--root_dir', default='C:\\RS datasets\\Emelyanova datasets\\LGC dataset\\data\\LGC\\Landsat', help='Datasets root directory') #/mnt/datadisk0/cgy/Datasets/LGC
+    parser.add_argument('--root_dir', default='..\\data\\LGC', help='Datasets root directory') #/mnt/datadisk0/cgy/Datasets/LGC
 
     opt = parser.parse_args()
     IMAGE_SIZE = opt.image_size
@@ -45,7 +45,7 @@ def main():
 
     total_index = 0
     # path where the training images saved in
-    output_dir = '/mnt/datadisk0/cgy/Datasets/LGC_Train'
+    output_dir = '..\\data\\LGC_Train'
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -53,7 +53,7 @@ def main():
     total_original_images = np.zeros((len(train_dates), 2, 6, IMAGE_SIZE[0], IMAGE_SIZE[1]))
     for k in tqdm(range(len(train_dates))):
         cur_date = train_dates[k]
-        target_dir = opt.root_dir + '/' + cur_date
+        target_dir = opt.root_dir + '\\' + cur_date
         for filename in os.listdir(target_dir):
             if filename[:3] != 'MOD':
                 path = os.path.join(target_dir, filename)

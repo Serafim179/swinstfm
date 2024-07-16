@@ -164,17 +164,15 @@ def train(opt, train_dates, test_dates, IMAGE_SIZE, PATCH_SIZE):
 
     cri_pix = GeneratorLoss()
 
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model.to(device)
-    #model.cuda()
-    cri_pix.cuda()
+    model = model.cuda()
+    cri_pix = cri_pix.cuda()
 
     optimizer = optim.Adam(model.parameters(), lr=1e-4, weight_decay=0)
     scheculer = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=3)
 
     best_ssim = 0.0
     best_epoch = -1
-    save_dir = '/mnt/datadisk0/cgy/Datasets/SwinSTFM/models/experiment_best'
+    save_dir = './data/models/experiment_best'
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
@@ -239,8 +237,8 @@ def main():
     parser.add_argument('--image_size', default=[2720, 3200], type=int, help='the image size (height, width)')
     parser.add_argument('--patch_size', default=256, type=int, help='training images crop size')
     parser.add_argument('--num_epochs', default=60, type=int, help='train epoch number')
-    parser.add_argument('--root_dir', default='/mnt/datadisk0/cgy/Datasets/LGC', help='Datasets root directory')
-    parser.add_argument('--train_dir', default='/mnt/datadisk0/cgy/Datasets/LGC_Train', help='Datasets train directory')
+    parser.add_argument('--root_dir', default='./data/LGC', help='Datasets root directory')
+    parser.add_argument('--train_dir', default='./data/LGC_Train', help='Datasets train directory')
 
     opt = parser.parse_args()
     IMAGE_SIZE = opt.image_size

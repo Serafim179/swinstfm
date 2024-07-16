@@ -140,6 +140,7 @@ def test(opt, model, test_dates, IMAGE_SIZE, PATCH_SIZE):
                             np.mean(np.array(cur_result['ssim'])), np.mean(np.array(cur_result['uiqi'])),
                             np.mean(np.array(cur_result['cc'])), cur_result['ergas'], cur_result['sam']
                         ))
+                        print(f'[{cur_date}/{ref_date}] RMSE: {cur_result["rmse"]} SSIM: {cur_result["ssim"]} UIQI: {cur_result["uiqi"]} CC: {cur_result["cc"]} ERGAS: {cur_result["ergas"]} SAM: {cur_result["sam"]}')
                         ref_day = int(ref_date.split('_')[1])
                         total_image += cur_predict
                         if ref_day != 363:
@@ -151,7 +152,7 @@ def test(opt, model, test_dates, IMAGE_SIZE, PATCH_SIZE):
                                 'count': final_im.shape[0],
                                 'dtype': np.int16
                             }
-                            save_dir = '/data/cgy/ParalSTFM/paper_images'
+                            save_dir = './data/test_output'
                             if not os.path.exists(save_dir):
                                 os.makedirs(save_dir)
                             im_name = os.path.join(save_dir, 'swin_LGC.tif')
@@ -170,7 +171,7 @@ def test(opt, model, test_dates, IMAGE_SIZE, PATCH_SIZE):
         'count': final_im.shape[0],
         'dtype': np.int16
     }
-    save_dir = '/data/cgy/ParalSTFM/paper_images'
+    save_dir = './data/test_output'
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
     im_name = os.path.join(save_dir, 'swinfuse_LGC.tif')
@@ -187,7 +188,7 @@ def train(opt, train_dates, test_dates, IMAGE_SIZE, PATCH_SIZE):
 
     model_G = SwinSTFM()
     G_dict = model_G.state_dict()
-    model_CKPT = torch.load('LGC_best.pth')
+    model_CKPT = torch.load('./data/models/experiment_best/epoch_best.pth')
     pretained_dict = {k: v for k, v in model_CKPT.items() if k in G_dict}
 
     G_dict.update(pretained_dict)
@@ -209,8 +210,8 @@ def main():
     parser.add_argument('--image_size', default=[2720, 3200], type=int, help='the image size (height, width)')
     parser.add_argument('--patch_size', default=256, type=int, help='training images crop size')
     parser.add_argument('--num_epochs', default=60, type=int, help='train epoch number')
-    parser.add_argument('--root_dir', default='/mnt/datadisk0/cgy/Datasets/LGC', help='Datasets root directory')
-    parser.add_argument('--train_dir', default='/mnt/datadisk0/cgy/Datasets/LGC_Train', help='Datasets train directory')
+    parser.add_argument('--root_dir', default='./data/LGC', help='Datasets root directory')
+    parser.add_argument('--train_dir', default='./data/LGC_Train', help='Datasets train directory')
 
     opt = parser.parse_args()
     IMAGE_SIZE = opt.image_size
